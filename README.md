@@ -1,6 +1,7 @@
 # bloc_tutorial
+Projeto em flutter para estudo de Bloc e sua estrutura.
+Intuito desse estudo é preparar uma refatoração do aplicativo da Prefeitura de Araras.
 
-A new Flutter project.
 
 ## Getting Started
 
