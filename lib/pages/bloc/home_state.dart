@@ -2,8 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class HomeState extends Equatable {
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class HomeLoadingState extends HomeState {}
