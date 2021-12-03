@@ -1,4 +1,4 @@
-import 'package:bloc_tutorial/pages/home_page.dart';
+import 'package:bloc_tutorial/pages/timer_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,9 +13,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: const Color.fromRGBO(109, 234, 255, 1),
+        colorScheme: const ColorScheme.light(
+          secondary: Color.fromRGBO(72, 74, 126, 1),
+        ),
       ),
-      home: const HomePage(),
+      home: const TimerPage(),
     );
   }
 }
