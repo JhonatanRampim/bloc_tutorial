@@ -1,4 +1,4 @@
-mport 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'weather.g.dart';
 
