@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
           secondary: Color.fromRGBO(72, 74, 126, 1),
         ),
       ),
-      home: Container(),
+      home: Scaffold(),
     );
   }
 }
