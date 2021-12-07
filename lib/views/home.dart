@@ -1,9 +1,8 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:bloc_tutorial/controllers/feed_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-import '../controllers/connectivity.dart';
-
-final connectivty = ConnectivityStore();
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,9 +12,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  FeedController? _feedController;
   @override
   void initState() {
     super.initState();
+    _feedController = FeedController();
+    _feedController!.getTopItems();
   }
 
   @override
@@ -29,15 +31,30 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Hey There'),
-          ],
+      body: Container(
+        child: Observer(
+          builder: (_) {
+            final list = _feedController!.listFeed;
+            return ListView.builder(
+              itemCount: list!.length,
+              itemBuilder: (_, i) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
+                    child: ListTile(
+                      title: Text(list[i].title),
+                      subtitle: Text(list[i].by),
+                      onTap: () {
+                        launch(list[i].url.toString());
+                      },
+                    ),
+                  ),
+                );
+              },
+            );
+          },
         ),
       ),
     );
-    ;
   }
 }

@@ -1,1 +1,1 @@
-String URL_API = 'https://hacker-news.firebaseio.com/v0/';
+const URL_API = 'https://hacker-news.firebaseio.com/v0';

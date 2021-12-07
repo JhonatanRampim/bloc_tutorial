@@ -38,6 +38,7 @@ dependencies:
   connectivity_plus: ^2.1.0
   provider: ^6.0.1
   http: ^0.13.4
+  url_launcher: ^6.0.17
 
 dev_dependencies:
   flutter_test:
