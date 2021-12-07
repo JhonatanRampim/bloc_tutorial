@@ -1,3 +1,4 @@
+import 'package:bloc_tutorial/pages/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
           secondary: Color.fromRGBO(72, 74, 126, 1),
         ),
       ),
-      home: Scaffold(),
+      home: HomePage(),
     );
   }
 }
