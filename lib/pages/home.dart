@@ -1,55 +1,58 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import '../stores/counter.dart'; // Import the Counter
+import 'package:mobx/mobx.dart';
+import '../stores/connectivity.dart';
 
-final counter = Counter();
+final connectivty = ConnectivityStore();
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage(this.store, {Key? key}) : super(key: key);
+
+  final ConnectivityStore store;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
+      GlobalKey<ScaffoldMessengerState>();
+  ReactionDisposer? _disposer;
+
+  @override
+  void initState() {
+    super.initState();
+    // a delay is used to avoid showing the snackbar too much when the connection drops in and out repeatedly
+    _disposer = reaction(
+      (_) => widget.store.connectivityStream.value,
+      (result) => _scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
+          content: Text(result == ConnectivityResult.none
+              ? 'You\'re offline'
+              : 'You\'re online'))),
+    );
+  }
+
+  @override
+  void dispose() {
+    _disposer!();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Você apertou o botão esse tantão de veiz aqui:'),
-            Observer(
-              builder: (_) => Text(
-                '${counter.value}',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  child: Icon(Icons.plus_one),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Color(0xFF6deaff)),
-                    shape: MaterialStateProperty.all(CircleBorder()),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
-                  onPressed: () => {counter.increment()},
-                ),
-                TextButton(
-                  child: Icon(Icons.remove),
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(Color(0xFF6deaff)),
-                    shape: MaterialStateProperty.all(CircleBorder()),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
-                  ),
-                  onPressed: () => {counter.decrement()},
-                )
-              ],
-            )
-          ],
+    return ScaffoldMessenger(
+      key: _scaffoldMessengerKey,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Home'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Mude o status da sua conexão e aguarde!'),
+            ],
+          ),
         ),
       ),
     );
