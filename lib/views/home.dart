@@ -35,22 +35,27 @@ class _HomePageState extends State<HomePage> {
         child: Observer(
           builder: (_) {
             final list = _feedController!.listFeed;
-            return ListView.builder(
-              itemCount: list!.length,
-              itemBuilder: (_, i) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    child: ListTile(
-                      title: Text(list[i].title),
-                      subtitle: Text(list[i].by),
-                      onTap: () {
-                        launch(list[i].url.toString());
-                      },
+            if (list != null) {
+              return ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (_, i) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      child: ListTile(
+                        title: Text(list[i].title),
+                        subtitle: Text(list[i].by),
+                        onTap: () {
+                          launch(list[i].url.toString());
+                        },
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
             );
           },
         ),
